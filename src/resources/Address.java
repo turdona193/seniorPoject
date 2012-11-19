@@ -9,9 +9,7 @@ public class Address {
 	private String city;
 	private String state;
 	private String zipCode;
-	
-	private String [] Allergies;
-	
+		
 	public Address(){
 		houseNumber = "00A";
 		streetName = "Street Name";
