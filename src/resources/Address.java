@@ -4,19 +4,15 @@ import java.util.regex.*;
 
 public class Address {
 
+	private String streetAddress;
 	private String houseNumber;
 	private String streetName;
 	private String city;
 	private String state;
 	private String zipCode;
+	private String country;
 		
-	public Address(){
-		houseNumber = "00A";
-		streetName = "Street Name";
-		city = "City";
-		state = "State";
-		zipCode = "00000";
-				
+	public Address(){			
 	}
 
 	public Address(String address){
@@ -32,6 +28,7 @@ public class Address {
 	        city =  m.group(6);
 	        state =  m.group(7);
 	        zipCode = m.group(8);
+	        streetAddress = houseNumber + " " + streetName;
 	    } else {
 	        throw new IllegalArgumentException("Somthing went Wrong");
 	    }
@@ -41,39 +38,42 @@ public class Address {
 		houseNumber = newHouseNumber;
 	}
 	
-	public void setZipCode(String newZipCode){
-		zipCode = newZipCode;
-	}
-	
 	public void setStreetName(String newStreetName){
 		streetName = newStreetName;
 	}
-	public void setState(String newState){
-		state = newState;
+	
+	public void setStreetAddress(String newStreetAddress){
+		streetAddress = newStreetAddress;
 	}
 	
 	public void setCity(String newCity){
 		city = newCity;
 	}
 	
+	public void setState(String newState){
+		state = newState;
+	}
 	
+	public void setZipCode(String newZipCode){
+		zipCode = newZipCode;
+	}
+	public void setCountry(String newCountry){
+		country = newCountry;
+	}
 	
 	public String toString() {
-		return "" + houseNumber + " "
-				+ streetName + ", " + city + ", " + state
-				+ " " + zipCode;
+		if(streetAddress.equals(""))
+		return streetAddress + ", " + city + ", " + state
+				+ " " + zipCode + " " + country;
+		else
+			return "" + houseNumber + " "
+			+ streetName + ", " + city + ", " + state
+			+ " " + zipCode + " " + country;
 	}
 
 
 
 	public static void main(String [] args){
-		Address address = new Address();
-		System.out.println(address);
-		
-		address.parseAddress(address.toString());
-		System.out.println(address);
-
-
-
 	}
+	
 }

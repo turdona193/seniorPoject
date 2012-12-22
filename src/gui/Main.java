@@ -40,9 +40,6 @@ public class Main extends JFrame {
 	public Main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -51,10 +48,10 @@ public class Main extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[]{30, 111, 30, 0};
+		gbl_panel.rowHeights = new int[]{30, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JButton btnNewUser = new JButton("New User");
@@ -64,16 +61,27 @@ public class Main extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnNewUser = new GridBagConstraints();
-		gbc_btnNewUser.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewUser.gridx = 0;
-		gbc_btnNewUser.gridy = 0;
+		gbc_btnNewUser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewUser.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewUser.gridx = 1;
+		gbc_btnNewUser.gridy = 1;
 		panel.add(btnNewUser, gbc_btnNewUser);
 		
-		JButton btnLoadUser = new JButton("Load User");
+		JButton btnLoadUser = new JButton("Load User From File");
 		GridBagConstraints gbc_btnLoadUser = new GridBagConstraints();
-		gbc_btnLoadUser.gridx = 0;
-		gbc_btnLoadUser.gridy = 1;
+		gbc_btnLoadUser.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLoadUser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnLoadUser.gridx = 1;
+		gbc_btnLoadUser.gridy = 2;
 		panel.add(btnLoadUser, gbc_btnLoadUser);
+		
+		JButton btnLoadByName = new JButton("Load by Name");
+		GridBagConstraints gbc_btnLoadByName = new GridBagConstraints();
+		gbc_btnLoadByName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnLoadByName.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLoadByName.gridx = 1;
+		gbc_btnLoadByName.gridy = 3;
+		panel.add(btnLoadByName, gbc_btnLoadByName);
 	}
 
 }
