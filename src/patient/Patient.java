@@ -18,7 +18,7 @@ public class Patient {
 	private String physician;
 	private String phoneNumber;
 	private ArrayList<String> allergies = new ArrayList<String>();
-	
+
 	/**
 	 * Constructor for Patient object.
 	 */
@@ -37,19 +37,22 @@ public class Patient {
 
 	/**
 	 * Writes patient information to a String
-	 * @return String Containing all Patient information
+	 * @return String String containing all patient information
 	 */
 	public String toString() {
 		return "Patient [Name=" + nameFirst +" "+ nameLast + ", gender=" + gender + ", address="
 				+ address + ", birth=" + birth + ", physician=" + physician
 				+ ", phoneNumber=" + phoneNumber + ", Allergies = " + allergies + "]";
 	}
-	
-	
+
+	/**
+	 * Writes patient information to a File, "LastNameFirstNamePT.txt" 
+	 * @return File File containing all patient information
+	 */
 	public File toFile(){
 		File file = new File(nameLast+nameFirst+"PT.txt");
 		BufferedWriter out;
-		
+
 		try {
 			out = new BufferedWriter(new FileWriter(file));
 			out.write(this.toString());
@@ -60,31 +63,43 @@ public class Patient {
 		return file;
 
 	}
-
+	/**
+	 * Sets first name field.
+	 * @param input String containing new first name
+	 */
 	public void setNameFirst(String input){
 		nameFirst = input;
 	}
-
+	/**
+	 * Sets last name field.
+	 * @param input String containing new last name
+	 */
 	public void setNameLast(String input){
 		nameLast = input;
 	}
-	
+	/**
+	 * Sets gender field.
+	 * @param input String containing new gender
+	 */
 	public void setGender(String input){
 		gender = input;
 	}
-	
+	/**
+	 * Sets address field.
+	 * @param input String containing new address field
+	 */
 	public void setAddress(Address input){
 		address = input;
 	}
-	
+
 	public void setBirth(Date input){
 		birth = input;
 	}
-	
+
 	public void setPhysician(String input){
 		physician = input;
 	}
-	
+
 	public void setPhoneNumber(String input){
 		phoneNumber = input;
 	}
@@ -97,27 +112,27 @@ public class Patient {
 	public String getNameFirst(){
 		return nameFirst;
 	}
-	
+
 	public String getNameLast(){
 		return nameLast;
 	}
-	
+
 	public String getGender(){
 		return gender;
 	}
-	
+
 	public String getAddress(){
 		return address.toString();
 	}
-	
+
 	public String Address(){
 		return address.toString();
 	}
-	
-	
+
+
 	public static void main(String [] args){
 		Patient pt = new Patient();
 		System.out.println(pt);
-		
+
 	}
 }
