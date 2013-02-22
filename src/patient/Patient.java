@@ -14,10 +14,12 @@ public class Patient {
 	private String nameFirst, nameLast;
 	private String gender;
 	private Address address;
-	private Date birth;
+	private String birth;
 	private String physician;
 	private String phoneNumber;
-	private ArrayList<String> allergies = new ArrayList<String>();
+	private ArrayList<String> pastMedicalHistory;
+	private ArrayList<String> allergies;
+	private String ssn;
 
 	/**
 	 * Constructor for Patient object.
@@ -26,13 +28,15 @@ public class Patient {
 		//Default Values for testing purposes.
 		nameFirst = "John";
 		nameLast = "Smith";
-		gender = "male";
+		gender = "Male";
 		address = new Address();
 		//TODO Fix date object
-		birth = null;
+		birth = "January 1, 1990";
 		physician = "Dr.Brown";
 		phoneNumber = "1234567890";
-		allergies.add("N/A");
+		pastMedicalHistory = new ArrayList<String>();
+		allergies = new ArrayList<String>();
+		ssn = "333224444";
 	}
 
 	/**
@@ -40,11 +44,26 @@ public class Patient {
 	 * @return String String containing all patient information
 	 */
 	public String toString() {
-		return "Patient [Name=" + nameFirst +" "+ nameLast + ", gender=" + gender + ", address="
-				+ address + ", birth=" + birth + ", physician=" + physician
-				+ ", phoneNumber=" + phoneNumber + ", Allergies = " + allergies + "]";
+		return ssn + "\n" + nameFirst + "\n" + nameLast+"\n"+ gender + "\n" +
+				address + "\n" + birth + "\n" + physician + "\n" + 
+				phoneNumber + "\n" + pMH() + "\n" + allergies();
 	}
-
+	
+	private String pMH(){
+		String str = "";
+		for(String condition: pastMedicalHistory){
+			str += condition + "\n";
+		}
+		return str + "}";
+	}
+	
+	private String allergies(){
+		String str= "";
+		for(String allergy: allergies){
+			str += allergy + "\n";
+		}
+		return str + "}";
+	}
 	/**
 	 * Writes patient information to a File, "LastNameFirstNamePT.txt" 
 	 * @return File File containing all patient information
@@ -56,13 +75,14 @@ public class Patient {
 		try {
 			out = new BufferedWriter(new FileWriter(file));
 			out.write(this.toString());
+			out.close();
 		} catch (Exception e) {
 			System.out.println("couldn't create file object:" + e);
 			e.printStackTrace();
 		}
 		return file;
-
 	}
+
 	/**
 	 * Sets first name field.
 	 * @param input String containing new first name
@@ -86,13 +106,20 @@ public class Patient {
 	}
 	/**
 	 * Sets address field.
-	 * @param input String containing new address field
+	 * @param input Address File containing new address field
 	 */
 	public void setAddress(Address input){
 		address = input;
 	}
+	/**
+	 * Sets address field.
+	 * @param input String containing new address field
+	 */
+	public void setAddress(String input){
+		address.parseAddress(input);
+	}
 
-	public void setBirth(Date input){
+	public void setBirth(String input){
 		birth = input;
 	}
 
@@ -105,9 +132,47 @@ public class Patient {
 	}
 
 	public void setAllergies(String input){
+		if(input.equals(""))
+			allergies.add("N/A");
+		else{
 		//TODO Separate string by the comma's
-		String holder = input;
+			Scanner sc = new Scanner(input);
+			while (sc.hasNextLine())
+				allergies.add(sc.nextLine());
+		}
+		
 	}
+	
+	public void setAllergies(ArrayList<String> input){
+		//TODO Separate string by the comma's
+		
+		for(int i = 0; i<input.size() ; i++){
+			allergies.add(input.get(i));
+		}
+	}
+	public void setMedicalHistory(String input){
+		if(input.equals(""))
+			pastMedicalHistory.add("N/A");
+		else{
+		//TODO Separate string by the comma's
+			Scanner sc = new Scanner(input);
+			while (sc.hasNextLine())
+				pastMedicalHistory.add(sc.nextLine());
+		}
+	}
+	
+	public void setMedicalHistory(ArrayList<String> input){
+		//TODO Separate string by the comma's
+		
+		for(int i = 0; i<input.size() ; i++){
+			pastMedicalHistory.add(input.get(i));
+		}
+	}
+	
+	public void setSSN(String newSSN){
+		ssn = newSSN;
+	}
+	
 
 	public String getNameFirst(){
 		return nameFirst;
@@ -124,15 +189,14 @@ public class Patient {
 	public String getAddress(){
 		return address.toString();
 	}
-
-	public String Address(){
-		return address.toString();
+	//TODO make geter and seter for SSN
+	public String getSSN(){
+		return ssn;
 	}
-
 
 	public static void main(String [] args){
 		Patient pt = new Patient();
 		System.out.println(pt);
-
+		pt.toFile();
 	}
 }

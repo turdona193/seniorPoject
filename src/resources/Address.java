@@ -12,7 +12,14 @@ public class Address {
 	private String zipCode;
 	private String country;
 		
-	public Address(){			
+	public Address(){
+		streetAddress = "";
+		houseNumber = "";
+		streetName = "";
+		city = "";
+		state = "";
+		zipCode = "";
+		country = "";
 	}
 
 	public Address(String address){
@@ -62,9 +69,9 @@ public class Address {
 	}
 	
 	public String toString() {
-		if(streetAddress.equals(""))
-		return streetAddress + ", " + city + ", " + state
-				+ " " + zipCode + " " + country;
+		if(!streetAddress.equals(""))
+			return streetAddress + ", " + city + ", " + state
+					+ " " + zipCode + " " + country;
 		else
 			return "" + houseNumber + " "
 			+ streetName + ", " + city + ", " + state
@@ -74,6 +81,14 @@ public class Address {
 
 
 	public static void main(String [] args){
+		Address address = new Address();
+		address.setStreetAddress("3510 Barrington Dr");
+		address.setCity("Potsdam");
+		address.setState("New York");
+		address.setZipCode("13676");
+		address.setCountry("United States");
+		System.out.println(address);
+
 	}
 	
 }

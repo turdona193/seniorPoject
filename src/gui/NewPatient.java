@@ -18,6 +18,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 import javax.swing.JTextPane;
 
 import patient.Patient;
@@ -42,7 +44,11 @@ public class NewPatient extends JFrame {
 	private JTextPane txtHistory;
 	private JFrame previewFrame;
 	private JComboBox boxGender;
-
+	private JComboBox boxMonth;
+	private JComboBox boxDate;
+	
+	private Patient pt;
+	private JTextField txtSSN;
 
 	/**
 	 * Launch the application.
@@ -60,7 +66,6 @@ public class NewPatient extends JFrame {
 		}
 	}
 
-
 	/**
 	 * Create the frame.
 	 */
@@ -76,10 +81,12 @@ public class NewPatient extends JFrame {
 		JPanel namePanel = new JPanel();
 		tabbedPane.addTab("Name", null, namePanel, null);
 		GridBagLayout gbl_namePanel = new GridBagLayout();
-		gbl_namePanel.columnWidths = new int[]{30, 76, 114, 30, 0};
-		gbl_namePanel.rowHeights = new int[]{30, 0, 0, 30, 0};
-		gbl_namePanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_namePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_namePanel.columnWidths = new int[] { 30, 76, 114, 30, 0 };
+		gbl_namePanel.rowHeights = new int[] { 30, 0, 0, 30, 0 };
+		gbl_namePanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_namePanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 1.0,
+				Double.MIN_VALUE };
 		namePanel.setLayout(gbl_namePanel);
 
 		JLabel FirstNameLabel = new JLabel("First Name");
@@ -120,10 +127,12 @@ public class NewPatient extends JFrame {
 		JPanel personalPanel = new JPanel();
 		tabbedPane.addTab("Personal", null, personalPanel, null);
 		GridBagLayout gbl_personalPanel = new GridBagLayout();
-		gbl_personalPanel.columnWidths = new int[]{30, 0, 0, 30, 0};
-		gbl_personalPanel.rowHeights = new int[]{30, 0, 0, 0, 30, 0};
-		gbl_personalPanel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_personalPanel.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_personalPanel.columnWidths = new int[] { 30, 0, 0, 30, 0 };
+		gbl_personalPanel.rowHeights = new int[] { 30, 0, 0, 0, 0, 30, 0 };
+		gbl_personalPanel.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0,
+				Double.MIN_VALUE };
+		gbl_personalPanel.rowWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 1.0,
+				Double.MIN_VALUE };
 		personalPanel.setLayout(gbl_personalPanel);
 
 		JLabel lblGender = new JLabel("Biological Gender");
@@ -135,7 +144,8 @@ public class NewPatient extends JFrame {
 		personalPanel.add(lblGender, gbc_lblGender);
 
 		boxGender = new JComboBox();
-		boxGender.setModel(new DefaultComboBoxModel(new String[] {"No Selection", "Male", "Female"}));
+		boxGender.setModel(new DefaultComboBoxModel(new String[] {
+				"No Selection", "Male", "Female" }));
 		GridBagConstraints gbc_boxGender = new GridBagConstraints();
 		gbc_boxGender.insets = new Insets(0, 0, 5, 5);
 		gbc_boxGender.fill = GridBagConstraints.HORIZONTAL;
@@ -160,12 +170,16 @@ public class NewPatient extends JFrame {
 		gbc_DatePanel.gridy = 2;
 		personalPanel.add(DatePanel, gbc_DatePanel);
 
-		JComboBox boxMonth = new JComboBox();
-		boxMonth.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		boxMonth = new JComboBox();
+		boxMonth.setModel(new DefaultComboBoxModel(new String[] { "0", "1",
+				"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 		DatePanel.add(boxMonth);
 
-		JComboBox boxDate = new JComboBox();
-		boxDate.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		boxDate = new JComboBox();
+		boxDate.setModel(new DefaultComboBoxModel(new String[] { "0", "1", "2",
+				"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
+				"14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+				"24", "25", "26", "27", "28", "29", "30", "31" }));
 		DatePanel.add(boxDate);
 
 		txtYear = new JTextField();
@@ -188,14 +202,33 @@ public class NewPatient extends JFrame {
 		gbc_txtPhonenumber.gridy = 3;
 		personalPanel.add(txtPhonenumber, gbc_txtPhonenumber);
 		txtPhonenumber.setColumns(10);
+		
+		JLabel lblSSN = new JLabel("Social Security Number");
+		GridBagConstraints gbc_lblSSN = new GridBagConstraints();
+		gbc_lblSSN.anchor = GridBagConstraints.EAST;
+		gbc_lblSSN.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSSN.gridx = 1;
+		gbc_lblSSN.gridy = 4;
+		personalPanel.add(lblSSN, gbc_lblSSN);
+		
+		txtSSN = new JTextField();
+		GridBagConstraints gbc_txtSSN = new GridBagConstraints();
+		gbc_txtSSN.insets = new Insets(0, 0, 5, 5);
+		gbc_txtSSN.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSSN.gridx = 2;
+		gbc_txtSSN.gridy = 4;
+		personalPanel.add(txtSSN, gbc_txtSSN);
+		txtSSN.setColumns(10);
 
 		JPanel addressPanel = new JPanel();
 		tabbedPane.addTab("Address", null, addressPanel, null);
 		GridBagLayout gbl_addressPanel = new GridBagLayout();
-		gbl_addressPanel.columnWidths = new int[]{30, 0, 263, 30, 0};
-		gbl_addressPanel.rowHeights = new int[]{30, 30, 30, 0, 0, 0, 0, 30, 0};
-		gbl_addressPanel.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_addressPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_addressPanel.columnWidths = new int[] { 30, 0, 263, 30, 0 };
+		gbl_addressPanel.rowHeights = new int[] { 30, 30, 30, 0, 0, 0, 0, 30, 0 };
+		gbl_addressPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 1.0,
+				Double.MIN_VALUE };
+		gbl_addressPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 1.0, Double.MIN_VALUE };
 		addressPanel.setLayout(gbl_addressPanel);
 
 		JLabel lblAddressLine = new JLabel("Address Line 1");
@@ -303,10 +336,12 @@ public class NewPatient extends JFrame {
 		JPanel medicalPanel = new JPanel();
 		tabbedPane.addTab("Medical", null, medicalPanel, null);
 		GridBagLayout gbl_medicalPanel = new GridBagLayout();
-		gbl_medicalPanel.columnWidths = new int[]{30, 0, 0, 30, 0};
-		gbl_medicalPanel.rowHeights = new int[]{30, 0, 0, 0, 30, 0};
-		gbl_medicalPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_medicalPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_medicalPanel.columnWidths = new int[] { 30, 0, 0, 30, 0 };
+		gbl_medicalPanel.rowHeights = new int[] { 30, 0, 0, 0, 30, 0 };
+		gbl_medicalPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_medicalPanel.rowWeights = new double[] { 0.0, 0.0, 1.0, 1.0, 0.0,
+				Double.MIN_VALUE };
 		medicalPanel.setLayout(gbl_medicalPanel);
 
 		JLabel lblPhysician = new JLabel("Physician");
@@ -361,10 +396,12 @@ public class NewPatient extends JFrame {
 		JPanel confirmationPanel = new JPanel();
 		tabbedPane.addTab("Confirmation", null, confirmationPanel, null);
 		GridBagLayout gbl_confirmationPanel = new GridBagLayout();
-		gbl_confirmationPanel.columnWidths = new int[]{135, 0, 0};
-		gbl_confirmationPanel.rowHeights = new int[]{75, 0, 0, 0, 0};
-		gbl_confirmationPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_confirmationPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_confirmationPanel.columnWidths = new int[] { 135, 0, 0 };
+		gbl_confirmationPanel.rowHeights = new int[] { 75, 0, 0, 0, 0 };
+		gbl_confirmationPanel.columnWeights = new double[] { 0.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_confirmationPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
 		confirmationPanel.setLayout(gbl_confirmationPanel);
 
 		JButton btnReset = new JButton("Reset");
@@ -405,32 +442,66 @@ public class NewPatient extends JFrame {
 
 	private void preview() {
 		JOptionPane.showMessageDialog(previewFrame,
-				"Name " + txtFirstName.getText() +" "+ txtLastName.getText());	
+				"Name " + txtFirstName.getText() + " " + txtLastName.getText());
 		// TODO could copy some of what is found by the save method
 	}
 
 	private void save() {
-		if(valid()){
+		if (valid()) {
 			createPatient();
-			closeThis();
+			pt.toFile();
 		}
-	}
-
-	private void closeThis() {
-		contentPane.setVisible(false);
-		// TODO Find a way to close 
-
 	}
 
 	private void createPatient() {
 		// TODO finish the create PT method
 		Address address = buildAddress();
-		Patient pt = new Patient();
+		pt=new Patient();
 		pt.setNameFirst(txtFirstName.getText());
 		pt.setNameLast(txtLastName.getText());
-		pt.setGender((String)boxGender.getSelectedItem());
+		pt.setGender((String) boxGender.getSelectedItem());
 		pt.setAddress(address);
+		
+		pt.setBirth(buildDate());//TODO fix this
+		pt.setPhysician(txtPhysician.getText());
+		pt.setPhoneNumber(txtPhonenumber.getText());;
+		pt.setMedicalHistory(txtHistory.getText());
+		pt.setAllergies(txtAllergies.getText());
 
+
+	}
+	
+	private String buildDate(){
+        String monthString;
+        switch (boxMonth.getSelectedIndex()) {
+            case 1:  monthString = "January";
+                     break;
+            case 2:  monthString = "February";
+                     break;
+            case 3:  monthString = "March";
+                     break;
+            case 4:  monthString = "April";
+                     break;
+            case 5:  monthString = "May";
+                     break;
+            case 6:  monthString = "June";
+                     break;
+            case 7:  monthString = "July";
+                     break;
+            case 8:  monthString = "August";
+                     break;
+            case 9:  monthString = "September";
+                     break;
+            case 10: monthString = "October";
+                     break;
+            case 11: monthString = "November";
+                     break;
+            case 12: monthString = "December";
+                     break;
+            default: monthString = "Invalid month";
+                     break;
+        }
+        return monthString + " " + boxDate.getSelectedIndex() + ", " + txtYear.getText();
 	}
 
 	private Address buildAddress() {
@@ -444,107 +515,130 @@ public class NewPatient extends JFrame {
 	}
 
 	private void reset() {
-		NewPatient.run();
-		closeThis();
-		// TODO close current window.
-	}	
+		txtFirstName.setText("");
+		txtLastName.setText("");
+		txtYear.setText("");
+		txtPhonenumber.setText("");
+		txtAddressTwo.setText("");
+		txtAddressOne.setText("");
+		txtCity.setText("");
+		txtState.setText("");
+		txtCountry.setText("");
+		txtZip.setText("");
+		txtPhysician.setText("");
+		txtAllergies.setText("");
+		txtHistory.setText("");
+		boxGender.setSelectedItem("No Selection");
+		boxDate.setSelectedItem("0");
+		boxMonth.setSelectedItem("0");
+	}
 
-
-	private boolean valid(){
+	private boolean valid() {
 		String emptyFields = "The fields were left blank: \n";
 		boolean valid = true;
 
-		if(txtFirstName.getText().equals("")){
+		if (txtFirstName.getText().equals("")) {
 			emptyFields = emptyFields + "**First Name \n";
 			valid = false;
 		}
-		if(txtLastName.getText().equals("")){
+		if (txtLastName.getText().equals("")) {
 			emptyFields = emptyFields + "**Last Name \n";
 			valid = false;
 		}
-		if(txtYear.getText().equals("")){
+		if (txtYear.getText().equals("")) {
 			emptyFields = emptyFields + "**Birth Year \n";
 			valid = false;
 		}
-		if(txtPhonenumber.getText().equals("")){
+		if (txtPhonenumber.getText().equals("")) {
 			emptyFields = emptyFields + "**Phone Number \n";
 			valid = false;
 		}
-		if(txtAddressOne.getText().equals("")){
+		if (txtAddressOne.getText().equals("")) {
 			emptyFields = emptyFields + "**Address Line One \n";
 			valid = false;
 		}
-		if(txtAddressTwo.getText().equals("")){
-			emptyFields = emptyFields + "**Address Line Two \n";
-			valid = false;
-		}
-		if(txtCity.getText().equals("")){
+		if (txtCity.getText().equals("")) {
 			emptyFields = emptyFields + "**City \n";
 			valid = false;
 		}
-		if(txtState.getText().equals("")){
+		if (txtState.getText().equals("")) {
 			emptyFields = emptyFields + "**State \n";
 			valid = false;
 		}
-		if(txtCountry.getText().equals("")){
+		if (txtCountry.getText().equals("")) {
 			emptyFields = emptyFields + "**Country \n";
 			valid = false;
 		}
-		if(txtZip.getText().equals("")){
+		if (txtZip.getText().equals("")) {
 			emptyFields = emptyFields + "**Zip Code \n";
 			valid = false;
 		}
-		if(txtPhysician.getText().equals("")){
+		if (txtPhysician.getText().equals("")) {
 			emptyFields = emptyFields + "**Physician \n";
 			valid = false;
 		}
 
-		if(!valid){
-			emptyFields = emptyFields + "Please fill these in before proceeding";
-			JOptionPane.showMessageDialog(previewFrame, emptyFields);	
+		if (!valid) {
+			emptyFields = emptyFields
+					+ "Please fill these in before proceeding";
+			JOptionPane.showMessageDialog(previewFrame, emptyFields);
 		}
 		return valid;
 	}
-	public void setFirstName(String input){
+
+	public void setFirstName(String input) {
 		txtFirstName.setText(input);
 	}
-	public void setLastName(String input){
+
+	public void setLastName(String input) {
 		txtLastName.setText(input);
 	}
-	public void setGender(String input){
+
+	public void setGender(String input) {
 		boxGender.setSelectedItem(input);
 	}
-	public void setYear(String input){
+
+	public void setYear(String input) {
 		txtYear.setText(input);
 	}
-	public void setPhonenumber(String input){
+
+	public void setPhonenumber(String input) {
 		txtPhonenumber.setText(input);
 	}
-	public void setAddressOne(String input){
+
+	public void setAddressOne(String input) {
 		txtAddressOne.setText(input);
 	}
-	public void setAddressTwo(String input){
+
+	public void setAddressTwo(String input) {
 		txtAddressTwo.setText(input);
 	}
-	public void setCity(String input){
+
+	public void setCity(String input) {
 		txtCity.setText(input);
 	}
-	public void setState(String input){
+
+	public void setState(String input) {
 		txtState.setText(input);
 	}
-	public void setCountry(String input){
+
+	public void setCountry(String input) {
 		txtCountry.setText(input);
 	}
-	public void setZip(String input){
+
+	public void setZip(String input) {
 		txtZip.setText(input);
 	}
-	public void setPhysician(String input){
+
+	public void setPhysician(String input) {
 		txtPhysician.setText(input);
 	}
-	public void setAllergies(String input){
+
+	public void setAllergies(String input) {
 		txtAllergies.setText(input);
 	}
-	public void setHistory(String input){
+
+	public void setHistory(String input) {
 		txtHistory.setText(input);
 	}
 
