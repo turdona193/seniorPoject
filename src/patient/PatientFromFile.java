@@ -21,7 +21,7 @@ public class PatientFromFile {
 			ptFile = new File(fileName); 
 			sc = new Scanner(ptFile);
 		}catch(Exception e){}
-		if(sc.next() == ""){
+		if(sc.hasNext() == false){
 			return null;
 		}
 		pt = new Patient();
@@ -29,9 +29,9 @@ public class PatientFromFile {
 		pt.setNameFirst(sc.nextLine());
 		pt.setNameLast(sc.nextLine());
 		pt.setGender(sc.nextLine());
+		pt.setLanguage(sc.nextLine());
 		pt.setAddress(sc.nextLine());
-		sc.nextLine();
-		//pt.setBirth(sc.nextLine());
+		pt.setBirth(sc.nextLine());
 		pt.setPhysician(sc.nextLine());
 		pt.setPhoneNumber(sc.nextLine());
 		
@@ -62,9 +62,9 @@ public class PatientFromFile {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
 		PatientFromFile newPatient = new PatientFromFile();
-		
+		Patient pt = newPatient.getPatient("ptFiles/TurdoNicholasPT.txt");
+		System.out.println(pt.printLong());
 	}
 
 }

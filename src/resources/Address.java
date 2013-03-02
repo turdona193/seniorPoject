@@ -10,16 +10,14 @@ public class Address {
 	private String city;
 	private String state;
 	private String zipCode;
-	private String country;
 		
 	public Address(){
 		streetAddress = "";
 		houseNumber = "";
-		streetName = "";
-		city = "";
-		state = "";
-		zipCode = "";
-		country = "";
+		streetName = "1 First Str";
+		city = "New York";
+		state = "NY";
+		zipCode = "00000";
 	}
 
 	public Address(String address){
@@ -64,30 +62,43 @@ public class Address {
 	public void setZipCode(String newZipCode){
 		zipCode = newZipCode;
 	}
-	public void setCountry(String newCountry){
-		country = newCountry;
-	}
 	
 	public String toString() {
 		if(!streetAddress.equals(""))
 			return streetAddress + ", " + city + ", " + state
-					+ " " + zipCode + " " + country;
+					+ " " + zipCode ;
 		else
 			return "" + houseNumber + " "
 			+ streetName + ", " + city + ", " + state
-			+ " " + zipCode + " " + country;
+			+ " " + zipCode;
+	}
+	
+	public String printLong(){
+		return "StreetAddress: " + streetAddress +
+				"\n HouseNumber: " + houseNumber +
+				"\n StreetName: " + streetName+
+				"\n City: " + city+
+				"\n State: " + state+
+				"\n ZipCode: " + zipCode;
 	}
 
 
 
 	public static void main(String [] args){
 		Address address = new Address();
-		address.setStreetAddress("3510 Barrington Dr");
+		address.setStreetAddress("3510 Barrington");
 		address.setCity("Potsdam");
-		address.setState("New York");
+		address.setState("NY");
 		address.setZipCode("13676");
-		address.setCountry("United States");
+		//Prints both variations of object
+		System.out.println(address.printLong());
 		System.out.println(address);
+		//Creates 
+		String add = address.toString();
+		address = new Address();
+		address.parseAddress(add);
+		System.out.println(address.printLong());
+
 
 	}
 	

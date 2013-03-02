@@ -49,9 +49,9 @@ public class Main extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{30, 111, 30, 0};
-		gbl_panel.rowHeights = new int[]{30, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JButton btnNewUser = new JButton("New User");
@@ -78,10 +78,17 @@ public class Main extends JFrame {
 		JButton btnLoadByName = new JButton("Load by Name");
 		GridBagConstraints gbc_btnLoadByName = new GridBagConstraints();
 		gbc_btnLoadByName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLoadByName.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLoadByName.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLoadByName.gridx = 1;
 		gbc_btnLoadByName.gridy = 3;
 		panel.add(btnLoadByName, gbc_btnLoadByName);
+		
+		JButton btnLoadFromRfid = new JButton("Load From RFID");
+		GridBagConstraints gbc_btnLoadFromRfid = new GridBagConstraints();
+		gbc_btnLoadFromRfid.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLoadFromRfid.gridx = 1;
+		gbc_btnLoadFromRfid.gridy = 4;
+		panel.add(btnLoadFromRfid, gbc_btnLoadFromRfid);
 	}
 
 }
